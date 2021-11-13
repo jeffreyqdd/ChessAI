@@ -1,1 +1,3 @@
 # ChessAI
+
+This project is currently undergoing a MASSIVE re-design....
