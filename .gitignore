@@ -1,2 +1,12 @@
-env
+# ignore
+env/**
+bin/**
+lib/**
+
+# metadata?
 .DS_STORE
+.vscode
+build.dSYM
+compiled.dSYM
+
+
