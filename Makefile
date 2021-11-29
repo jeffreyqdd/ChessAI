@@ -32,7 +32,7 @@ $(BIN)/$(EXECUTABLE): $(SRC)/*.cpp
 	$(CXX) $(CXX_FLAGS) -I $(INCLUDE) -L $(LIB) $(SOURCES) -o $@ $(LIBRARIES)
 
 flush:
-	clear
+	reset
 
 run: 
 	@echo "🚀 Executing..."
