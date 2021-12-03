@@ -1,14 +1,20 @@
 #include <chrono>
+#include <assert.h>
 #include "tools/tools.h"
 #include "board/bitboard.h"
+
 using namespace std;
 
 int main() {     
     cypher::initAllMasks();
-
-    for(int i = 0; i < 64; i++) {
-        PRETTY_PRINT(cypher::pawnMoveMask[cypher::WHITE][i]);
+    for (int i = 0; i < 64; i++) {
+        assert(cypher::knightMoveMask[i] == cypher::knightAttackMask[i]);
+        assert(cypher::kingMoveMask[i] == cypher::kingAttackMask[i]);
     }
+    // assert (cypher::knightMoveMask == cypher::knightAttackMask);
+    // for(int i = 0; i < 64; i++) {
+    //     PRETTY_PRINT(cypher::pawnMoveMask[i][cypher::WHITE]);
+    // }
 
     // for (int i = 0; i < 8; i++) {
     //     Bitboard bitboard = EMPTY_BB;

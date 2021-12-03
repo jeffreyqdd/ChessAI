@@ -73,7 +73,9 @@ namespace cypher {
     void initPawnMoveMask();
 
     Bitboard getKnightAttackMask(int square);
+    Bitboard getKnightMoveMask(int square);
     void initKnightAttackMask();
+    void initKnightMoveMask();
 
     Bitboard getKingAttackMask(int square);
     void initKingAttackMask();
