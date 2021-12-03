@@ -3,14 +3,31 @@
 #include "board/bitboard.h"
 using namespace std;
 
-int main() { 
-    printf("hello world\n");
-    
+int main() {     
     cypher::initAllMasks();
-    
-    for (int i = 0; i < 64; i++) {
-        PRETTY_PRINT(cypher::kingAttackMask[i]);
+
+    for(int i = 0; i < 64; i++) {
+        PRETTY_PRINT(cypher::pawnMoveMask[cypher::WHITE][i]);
     }
+
+    // for (int i = 0; i < 8; i++) {
+    //     Bitboard bitboard = EMPTY_BB;
+
+    //     for (int rank = 0; rank < RANK_NUM; rank ++) { 
+    //         for (int file = 0; file < FILE_NUM; file ++) {
+    //             int square = rank * RANK_NUM + file;
+    //             if (rank == i) SET_REF_BIT(bitboard, square);
+    //         }
+    //     }
+
+    // PRETTY_PRINT(4629771061636907072ULL);
+
+    // }
+
+
+    // for (int i = 0; i < 64; i++) {
+        // PRETTY_PRINT(cypher::kingAttackMask[i]);
+    // }
     // PRETTY_PRINT(1157442765409226768ULL)
 
 

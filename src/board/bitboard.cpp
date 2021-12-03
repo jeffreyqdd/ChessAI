@@ -4,6 +4,8 @@
 using namespace std;
 
 namespace cypher {
+    bool HAS_INIT_CYPHER_BITBOARD = false;
+
     Bitboard pawnAttackMask[64][2]  = {};
     Bitboard knightAttackMask[64]   = {};
     Bitboard kingAttackMask[64]     = {};
@@ -23,7 +25,7 @@ namespace cypher {
         //set piece on bitboard
         SET_REF_BIT(bitboard, square);
 
-        if (side == cypher::WHITE) {
+        if (side == WHITE) {
             if ((bitboard >> 7) & ~A_FILE) attacks |= bitboard >> 7;
             if ((bitboard >> 9) & ~H_FILE) attacks |= bitboard >> 9;
         } else {
@@ -33,10 +35,39 @@ namespace cypher {
 
         return attacks;
     }
+
+    Bitboard getPawnMoveMask(int square, Colors side) {
+        // move bitboard
+        Bitboard moves = EMPTY_BB;
+
+        // slider bitboard 
+        Bitboard bitboard = SET_BIT(EMPTY_BB, square);
+
+        if (side == WHITE) {
+            if (bitboard & RANK_2) moves |= bitboard >> 16;
+            moves |= bitboard >> 8;
+        } else {
+            if (bitboard & RANK_7) moves |= bitboard << 16;
+            moves |= bitboard << 8;
+
+        }
+
+        //Bitboard
+        //PRETTY_PRINT(  );
+
+        return moves;
+    }
+
     void initPawnAttackMask() {
         for (int square = 0; square < 64; square++) {
             pawnAttackMask[square][WHITE] = getPawnAttackMask(square, WHITE);
             pawnAttackMask[square][BLACK] = getPawnAttackMask(square, BLACK);
+        }
+    }
+    void initPawnMoveMask() {
+        for (int square = 0; square < 64; square++) {
+            pawnMoveMask[square][WHITE] = getPawnMoveMask(square, WHITE);
+            pawnMoveMask[square][BLACK] = getPawnMoveMask(square, BLACK);
         }
     }
 
@@ -103,6 +134,7 @@ namespace cypher {
 
     void initAllMasks() {
         initPawnAttackMask();
+        initPawnMoveMask();
         initKnightAttackMask();
         initKingAttackMask();
         HAS_INIT_CYPHER_BITBOARD = true;

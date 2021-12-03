@@ -7,7 +7,7 @@ namespace cypher {
     /************************************************************\
     * Bitboard section
     \************************************************************/
-    bool HAS_INIT_CYPHER_BITBOARD = false;
+    extern bool HAS_INIT_CYPHER_BITBOARD;
 
     /************************************************************\
     * PRECOMPUTED LOOKUP VALUES AND TABLES
@@ -47,6 +47,15 @@ namespace cypher {
     const Bitboard AB_FILE = (A_FILE | B_FILE);
     const Bitboard GH_FILE = (G_FILE | H_FILE);
 
+    const Bitboard RANK_1 = 18374686479671623680ULL;
+    const Bitboard RANK_2 = 71776119061217280ULL;
+    const Bitboard RANK_3 = 280375465082880ULL;
+    const Bitboard RANK_4 = 1095216660480ULL;
+    const Bitboard RANK_5 = 4278190080ULL;
+    const Bitboard RANK_6 = 16711680ULL;
+    const Bitboard RANK_7 = 65280ULL;
+    const Bitboard RANK_8 = 255ULL;
+
     // non-sliding-piece pre-attack lookup
     extern Bitboard pawnAttackMask[64][2];
     extern Bitboard knightAttackMask[64];
@@ -58,9 +67,10 @@ namespace cypher {
     extern Bitboard kingMoveMask[64];
 
 
-
     Bitboard getPawnAttackMask(int square, Colors side);
+    Bitboard getPawnMoveMask(int square, Colors side);
     void initPawnAttackMask();
+    void initPawnMoveMask();
 
     Bitboard getKnightAttackMask(int square);
     void initKnightAttackMask();
