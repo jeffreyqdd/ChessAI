@@ -6,11 +6,10 @@ using namespace std;
 int main() { 
     printf("hello world\n");
     
-    cypher::initPawnAttacks();
-    cypher::initKnightAttacks();
+    cypher::initAllMasks();
     
     for (int i = 0; i < 64; i++) {
-        PRETTY_PRINT(cypher::knightAttacks[i])
+        PRETTY_PRINT(cypher::kingAttackMask[i]);
     }
     // PRETTY_PRINT(1157442765409226768ULL)
 

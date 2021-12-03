@@ -4,15 +4,23 @@
 using namespace std;
 
 namespace cypher {
-    Bitboard pawnAttacks[64][2] = {};
-    Bitboard getPawnMask(int square, Colors side) {
+    Bitboard pawnAttackMask[64][2]  = {};
+    Bitboard knightAttackMask[64]   = {};
+    Bitboard kingAttackMask[64]     = {};
+
+    Bitboard pawnMoveMask[64][2]    = {};
+    Bitboard knightMoveMask[64]     = {};
+    Bitboard kingMoveMask[64]       = {};
+
+
+    Bitboard getPawnAttackMask(int square, Colors side) {
         // attacks bitboard
         Bitboard attacks = EMPTY_BB;
 
         // piece bitboard
         Bitboard bitboard = EMPTY_BB;
 
-        //set piece on board
+        //set piece on bitboard
         SET_REF_BIT(bitboard, square);
 
         if (side == cypher::WHITE) {
@@ -25,23 +33,21 @@ namespace cypher {
 
         return attacks;
     }
-    void initPawnAttacks() {
+    void initPawnAttackMask() {
         for (int square = 0; square < 64; square++) {
-            pawnAttacks[square][WHITE] = getPawnMask(square, WHITE);
-            pawnAttacks[square][BLACK] = getPawnMask(square, BLACK);
+            pawnAttackMask[square][WHITE] = getPawnAttackMask(square, WHITE);
+            pawnAttackMask[square][BLACK] = getPawnAttackMask(square, BLACK);
         }
     }
 
-
-    Bitboard knightAttacks[64] = {};
-    Bitboard getKnightMask(int square) {
+    Bitboard getKnightAttackMask(int square) {
         // attacks bitboard
         Bitboard attacks = EMPTY_BB;
 
         // piece bitboard
         Bitboard bitboard = EMPTY_BB;
 
-        //set piece on board
+        //set piece on bitboard
         SET_REF_BIT(bitboard, square);
 
         // right side
@@ -60,10 +66,45 @@ namespace cypher {
     
         return attacks;
     }
-
-    void initKnightAttacks() {
+    void initKnightAttackMask() {
         for (int square = 0; square < 64; square++) {
-            knightAttacks[square] = getKnightMask(square);
+            knightAttackMask[square] = getKnightAttackMask(square);
         }
+    }
+
+    Bitboard getKingAttackMask(int square) {
+        //attacks bitboard
+        Bitboard attacks = EMPTY_BB;
+
+        //piece bitboard
+        Bitboard bitboard = EMPTY_BB;
+
+        //set piece on bitboard
+        SET_REF_BIT(bitboard, square);
+
+        if(bitboard & ~A_FILE) attacks |= bitboard << 7;
+        if(bitboard & ~A_FILE) attacks |= bitboard >> 9;
+        if(bitboard & ~A_FILE) attacks |= bitboard >> 1;
+        
+        if(bitboard & ~H_FILE) attacks |= bitboard >> 7;
+        if(bitboard & ~H_FILE) attacks |= bitboard << 9;
+        if(bitboard & ~H_FILE) attacks |= bitboard << 1;
+        attacks |= bitboard << 8;
+        attacks |= bitboard >> 8;
+
+        return attacks;
+    }
+    void initKingAttackMask(){
+        for (int square = 0; square < 64; square++) {
+            kingAttackMask[square] = getKingAttackMask(square);
+        }
+    }
+
+
+    void initAllMasks() {
+        initPawnAttackMask();
+        initKnightAttackMask();
+        initKingAttackMask();
+        HAS_INIT_CYPHER_BITBOARD = true;
     }
 }

@@ -4,6 +4,7 @@ using namespace std;
 
 #define EMPTY_BB 0ULL
 #define ONE_BB   1ULL
+#define DEFAULT_FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 #define RANK_NUM 8
 #define FILE_NUM 8

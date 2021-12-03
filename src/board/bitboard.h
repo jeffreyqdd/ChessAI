@@ -5,8 +5,37 @@ using namespace std;
 
 namespace cypher {
     /************************************************************\
-    * lookup values and tables
+    * Bitboard section
+    \************************************************************/
+    bool HAS_INIT_CYPHER_BITBOARD = false;
+
+    /************************************************************\
+    * PRECOMPUTED LOOKUP VALUES AND TABLES
+    * 
+    * I define 
+    *   1) attacks          - all possible capture squares
+    *   2) moves            - all possible non capture squares
+    *   3) sliding piece    - rooks, bishops, and queen
     \************************************************************/ 
+ 
+    /* Note that bitshifts work in this setup as follows
+    
+        x << n; // plus (+) n bits
+        x >> n; // minus (-) n bits
+
+        NW             N            NE
+
+                -9    -8    -7
+                    \  |  /
+        W       -1 <-  0 -> +1      E
+                    /  |  \
+                +7    +8    +9
+
+        SW             S            SE
+     
+    */
+
+    // files
     const Bitboard A_FILE = 72340172838076673ULL;
     const Bitboard B_FILE = 144680345676153346ULL;
     const Bitboard C_FILE = 289360691352306692ULL;
@@ -18,16 +47,43 @@ namespace cypher {
     const Bitboard AB_FILE = (A_FILE | B_FILE);
     const Bitboard GH_FILE = (G_FILE | H_FILE);
 
-    //en passant squares will need to be generated live
-    extern Bitboard pawnAttacks[64][2];
-    Bitboard getPawnMask(int square, Colors side);
-    void initPawnAttacks();
+    // non-sliding-piece pre-attack lookup
+    extern Bitboard pawnAttackMask[64][2];
+    extern Bitboard knightAttackMask[64];
+    extern Bitboard kingAttackMask[64];
 
-    extern Bitboard knightAttacks[64];
-    Bitboard getKnightMask(int square);
-    void initKnightAttacks();
+    // non-sliding-piece pre-move lookup
+    extern Bitboard pawnMoveMask[64][2];
+    extern Bitboard knightMoveMask[64];
+    extern Bitboard kingMoveMask[64];
 
 
+
+    Bitboard getPawnAttackMask(int square, Colors side);
+    void initPawnAttackMask();
+
+    Bitboard getKnightAttackMask(int square);
+    void initKnightAttackMask();
+
+    Bitboard getKingAttackMask(int square);
+    void initKingAttackMask();
+
+    void initAllMasks();
+
+
+    class Board {
+        private:
+        Bitboard PAWNS[2];
+        Bitboard KNIGHTS[2];
+        Bitboard BISHOPS[2];
+        Bitboard QUEEN[2];
+        Bitboard KING[2];
+       
+        public:
+        Board();
+        Board(string fen);
+
+    };
 }
 
 //     extern u64 pawnAttacks[64][2];
