@@ -10,7 +10,7 @@ namespace cypher {
     extern bool HAS_INIT_CYPHER_BITBOARD;
 
     /************************************************************\
-    * PRECOMPUTED LOOKUP VALUES AND TABLES
+    * PRECOMPUTING LOOKUP VALUES AND TABLES
     * 
     * I define 
     *   1) attacks          - all possible capture squares
@@ -35,7 +35,9 @@ namespace cypher {
      
     */
 
-    // files
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // PRECOMPUTED FILE BITBOARDS
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     const Bitboard A_FILE = 72340172838076673ULL;
     const Bitboard B_FILE = 144680345676153346ULL;
     const Bitboard C_FILE = 289360691352306692ULL;
@@ -47,6 +49,9 @@ namespace cypher {
     const Bitboard AB_FILE = (A_FILE | B_FILE);
     const Bitboard GH_FILE = (G_FILE | H_FILE);
 
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // PRECOMPUTED RANK BITBOARDS
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     const Bitboard RANK_1 = 18374686479671623680ULL;
     const Bitboard RANK_2 = 71776119061217280ULL;
     const Bitboard RANK_3 = 280375465082880ULL;
@@ -56,16 +61,17 @@ namespace cypher {
     const Bitboard RANK_7 = 65280ULL;
     const Bitboard RANK_8 = 255ULL;
 
-    // non-sliding-piece pre-attack lookup
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    // NON SLIDING PIECE ATTACK AND MOVE LOOKUP
+    //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     extern Bitboard pawnAttackMask[64][2];
-    extern Bitboard knightAttackMask[64];
-    extern Bitboard kingAttackMask[64];
-
-    // non-sliding-piece pre-move lookup
     extern Bitboard pawnMoveMask[64][2];
-    extern Bitboard knightMoveMask[64];
-    extern Bitboard kingMoveMask[64];
 
+    extern Bitboard knightAttackMask[64];
+    extern Bitboard knightMoveMask[64];
+
+    extern Bitboard kingAttackMask[64];
+    extern Bitboard kingMoveMask[64];
 
     Bitboard getPawnAttackMask(int square, Colors side);
     Bitboard getPawnMoveMask(int square, Colors side);
@@ -78,9 +84,18 @@ namespace cypher {
     void initKnightMoveMask();
 
     Bitboard getKingAttackMask(int square);
+    Bitboard getKingMoveMask(int square);
     void initKingAttackMask();
+    void initKingMoveMask();
+
+
+
 
     void initAllMasks();
+
+
+
+    //sliding-piece 
 
 
     class Board {

@@ -107,7 +107,6 @@ namespace cypher {
         }
     }
 
-
     Bitboard getKingAttackMask(int square) {
         //attacks bitboard
         Bitboard attacks = EMPTY_BB;
@@ -153,6 +152,7 @@ namespace cypher {
         initKnightMoveMask();
         
         initKingAttackMask();
+        initKingMoveMask();
         HAS_INIT_CYPHER_BITBOARD = true;
     }
 }
